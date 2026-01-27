@@ -1,0 +1,22 @@
+Metadata-Version: 2.4
+Name: ilrl
+Version: 0.1.0
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: opencv-python
+Requires-Dist: torch
+Requires-Dist: torchvision
+Requires-Dist: scikit-image==0.19.3
+Requires-Dist: pygame==2.1.2
+Requires-Dist: pymunk==6.2.1
+Requires-Dist: gym==0.26.2
+Requires-Dist: shapely==1.8.4
+Requires-Dist: gdown
+Requires-Dist: zarr==2.12.0
+Requires-Dist: diffusers==0.18.2
+Requires-Dist: huggingface_hub==0.25.0
+Requires-Dist: imageio
+Requires-Dist: imageio[ffmpeg]
+
+# ILRL_Research
+Research repository for robot learning algorithms, including Imitation Learning(IL) and Reinforcement Learning.

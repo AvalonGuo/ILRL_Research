@@ -1,0 +1,14 @@
+opencv-python
+torch
+torchvision
+scikit-image==0.19.3
+pygame==2.1.2
+pymunk==6.2.1
+gym==0.26.2
+shapely==1.8.4
+gdown
+zarr==2.12.0
+diffusers==0.18.2
+huggingface_hub==0.25.0
+imageio
+imageio[ffmpeg]
