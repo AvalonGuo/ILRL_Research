@@ -3,10 +3,12 @@ Name: ilrl
 Version: 0.1.0
 Requires-Python: >=3.10
 Description-Content-Type: text/markdown
+Requires-Dist: numpy==2.02
 Requires-Dist: opencv-python
 Requires-Dist: torch
 Requires-Dist: torchvision
-Requires-Dist: scikit-image==0.19.3
+Requires-Dist: scikit-image==0.25.2
+Requires-Dist: scikit-video==1.1.11
 Requires-Dist: pygame==2.1.2
 Requires-Dist: pymunk==6.2.1
 Requires-Dist: gym==0.26.2

@@ -1,6 +1,9 @@
 from ilrl.envs.pusht import PushTImageEnv
+from ilrl.loader import PushTImageDataset,CloseDrawerDataset
+from ilrl.utils import download_pushT_data
+import torch
 import numpy as np
-
+import h5py
 
 def test_pushTENV():
     env = PushTImageEnv()
@@ -24,5 +27,92 @@ def test_pushTENV():
         print("obs['agent_pos'].shape:", obs['agent_pos'].shape, "float32, [0,512]")
         print("action.shape: ", action.shape, "float32, [0,512]")
 
+def check_pushTDataset():
+    dataset_path = 'ilrl/dataset/close_drawer.zarr'
+    # parameters
+    pred_horizon = 16
+    obs_horizon = 2
+    action_horizon = 8
+    #|o|o|                             observations: 2
+    #| |a|a|a|a|a|a|a|a|               actions executed: 8
+    #|p|p|p|p|p|p|p|p|p|p|p|p|p|p|p|p| actions predicted: 16
+
+    # create dataset from file
+    dataset = PushTImageDataset(
+        dataset_path=dataset_path,
+        pred_horizon=pred_horizon,
+        obs_horizon=obs_horizon,
+        action_horizon=action_horizon
+    )
+    # save training data statistics (min, max) for each dim
+    stats = dataset.stats
+
+    # create dataloader
+    dataloader = torch.utils.data.DataLoader(
+        dataset,
+        batch_size=64,
+        num_workers=4,
+        shuffle=True,
+        # accelerate cpu-gpu transfer
+        pin_memory=True,
+        # don't kill worker process afte each epoch
+        persistent_workers=True
+    )
+
+    # visualize data in batch
+    batch = next(iter(dataloader))
+    # print(batch['action'])
+    print("batch['image'].shape:", batch['image'].shape)
+    print("batch['agent_pos'].shape:", batch['agent_pos'].shape)
+    print("batch['action'].shape", batch['action'].shape)
+
+def check_closeDrawerDataset():
+    dataset_path = 'ilrl/dataset/close_drawer.zarr'
+    # parameters
+    pred_horizon = 16
+    obs_horizon = 2
+    action_horizon = 8
+    #|o|o|                             observations: 2
+    #| |a|a|a|a|a|a|a|a|               actions executed: 8
+    #|p|p|p|p|p|p|p|p|p|p|p|p|p|p|p|p| actions predicted: 16
+
+    # create dataset from file
+    dataset = CloseDrawerDataset(
+        dataset_path=dataset_path,
+        pred_horizon=pred_horizon,
+        obs_horizon=obs_horizon,
+        action_horizon=action_horizon
+    )
+    # save training data statistics (min, max) for each dim
+    stats = dataset.stats
+
+    # create dataloader
+    dataloader = torch.utils.data.DataLoader(
+        dataset,
+        batch_size=64,
+        num_workers=4,
+        shuffle=True,
+        # accelerate cpu-gpu transfer
+        pin_memory=True,
+        # don't kill worker process afte each epoch
+        persistent_workers=True
+    )
+
+    # visualize data in batch
+    batch = next(iter(dataloader))
+    print(batch['image'][0])
+    print("batch['image'].shape:", batch['image'].shape)
+    print("batch['agent_pos'].shape:", batch['agent_pos'].shape)
+    print("batch['action'].shape", batch['action'].shape)
+
+
+
+
+
+
 if __name__ == "__main__":
-    test_pushTENV()
+    # test_pushTENV()
+    # download_pushT_data()
+    # check_pushTDataset()
+    check_closeDrawerDataset()
+    # check_closeDrawerDataset()
